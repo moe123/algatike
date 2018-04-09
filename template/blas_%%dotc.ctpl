@@ -1,0 +1,96 @@
+// # -*- coding: utf-8, tab-width: 3 -*-
+
+//
+// Assembled from blas_%%dotc.ctpl template, do not edit.
+// blas_${SYM_PREFIX_LOWER}dotc.c
+//
+// Copyright (C) 2018 Moe123. All rights reserved.
+//
+
+// ${SYM_FORTRAN_COMPLEX_TYPE} FUNCTION ${SYM_PREFIX_UPPER}DOTC(N,CX,INCX,CY,INCY)
+// Online html documentation and credits available at:
+// http://www.netlib.org/lapack/explore-html/
+//
+
+#include <algatike/cfortran/cfn_lang.h>
+#include <algatike/cfortran/cfn_math.h>
+#include <algatike/cfortran/cfn_complex.h>
+
+/*! COMPLEX FUNCTION ${SYM_PREFIX_UPPER}DOTC(
+ *   INTEGER N
+ * , ${SYM_FORTRAN_COMPLEX_TYPE} CX(*)
+ * , INTEGER INCX
+ * , ${SYM_FORTRAN_COMPLEX_TYPE} CY(*)
+ * , INTEGER INCY
+ * )
+ *
+ * ${SYM_COMPLEX_TYPE} CFN_${SYM_PREFIX_UPPER}DOTC(
+ *   CFN_INTEGER N
+ * , ${SYM_COMPLEX_TYPE} CFN_INTENT CFN_D1D(CX)
+ * , CFN_INTEGER INCX
+ * , ${SYM_COMPLEX_TYPE} CFN_INTENT CFN_D1D(CY)
+ * , CFN_INTEGER INCY
+ * ) CFN_EOI
+ *
+ * \brief  Forms the dot product of two complex vectors. ${SYM_PREFIX_UPPER}DOTC = X ^ H * Y
+ *         Computes the dot product of the complex conjugate of vector x with vector y.
+ * \param  INTEGER N
+ *     Specifies the number of elements in input vector(s).
+ * \param  ${SYM_FORTRAN_COMPLEX_TYPE} CX(*)
+ *     Dimension at least (1 + (N - 1) * | INCX |)
+ * \param  INTEGER INCX
+ *     Specifies the storage spacing between elements of CX.
+ * \param  ${SYM_FORTRAN_COMPLEX_TYPE} CY(*)
+ *     Dimension at least (1 + (N - 1) * | INCY |)
+ * \param  INTEGER INCY
+ *     Specifies the storage spacing between elements of CY.
+ * \result ${SYM_FORTRAN_COMPLEX_TYPE}.
+ *
+ */
+CFN_FUNCTION(${SYM_COMPLEX_SHORT_TYPE}, ${SYM_PREFIX_UPPER}DOTC,
+(
+	  CFN_INTEGER N
+	, ${SYM_COMPLEX_TYPE} CFN_INTENT CFN_D1D(CX)
+	, CFN_INTEGER INCX
+	, ${SYM_COMPLEX_TYPE} CFN_INTENT CFN_D1D(CY)
+	, CFN_INTEGER INCY
+))
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_CADD})  CFN_EOI
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_CONJG}) CFN_EOI
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_CMUL})  CFN_EOI
+
+	CFN_INTEGER II, IX, IY CFN_EOI
+	${SYM_CMPLX_DECL}(CTEMP, 0.0, 0.0) CFN_EOI
+	${SYM_CMPLX_DECL}(${SYM_PREFIX_UPPER}DOTC, 0.0, 0.0) CFN_EOI
+
+	CFN_IF (N CFN_LE 0) CFN_RETURN ${SYM_PREFIX_UPPER}DOTC CFN_EOI
+	CFN_IF (INCX CFN_EQ 1 CFN_AND INCY CFN_EQ 1) CFN_THEN
+		CFN_DO (II, 1, N)
+			CTEMP = ${SYM_CALL_CADD}(CTEMP,
+				${SYM_CALL_CMUL}(
+					  ${SYM_CALL_CONJG}(CX CFN_D1D_AT (II))
+					, CY CFN_D1D_AT (II)
+			)) CFN_EOI
+		CFN_END_DO
+	CFN_ELSE
+		IX = 1 CFN_EOI
+		IY = 1 CFN_EOI
+		CFN_IF (INCX CFN_LT 0) IX = (-N + 1) * INCX + 1 CFN_EOI
+		CFN_IF (INCY CFN_LT 0) IY = (-N + 1) * INCY + 1 CFN_EOI
+		CFN_DO (II, 1, N)
+			CTEMP = ${SYM_CALL_CADD}(CTEMP,
+				${SYM_CALL_CMUL}(
+					  ${SYM_CALL_CONJG}(CX CFN_D1D_AT (IX))
+					, CY CFN_D1D_AT (IY)
+			)) CFN_EOI
+			IX = IX + INCX CFN_EOI
+			IY = IY + INCY CFN_EOI
+		CFN_END_DO
+	CFN_END_IF
+
+	${SYM_PREFIX_UPPER}DOTC = CTEMP CFN_EOI
+
+	CFN_RETURN ${SYM_PREFIX_UPPER}DOTC CFN_EOI
+	CFN_END
+
+/* EOF */

@@ -1,0 +1,41 @@
+// # -*- coding: utf-8, tab-width: 3 -*-
+
+//
+// Assembled from blas_%%abs1.ctpl template, do not edit.
+// blas_${SYM_PREFIX_LOWER}abs1.c
+//
+// Copyright (C) 2018 Moe123. All rights reserved.
+//
+
+// ${SYM_FORTRAN_REAL_TYPE} FUNCTION ${SYM_PREFIX_UPPER}ABS1(Z)
+// Online html documentation and credits available at:
+// http://www.netlib.org/lapack/explore-html/
+//
+
+#include <algatike/cfortran/cfn_lang.h>
+#include <algatike/cfortran/cfn_math.h>
+#include <algatike/cfortran/cfn_complex.h>
+
+/*! ${SYM_FORTRAN_REAL_TYPE} FUNCTION ${SYM_PREFIX_UPPER}ABS1(${SYM_FORTRAN_COMPLEX_TYPE} Z)
+ *
+ * ${SYM_REAL_TYPE} CFN_${SYM_PREFIX_UPPER}ABS1(${SYM_COMPLEX_TYPE} Z)
+ *
+ * \brief  Computes |Re(.)| + |Im(.)| of a complex number.
+ * \param  ${SYM_FORTRAN_COMPLEX_TYPE} Z
+ * \result ${SYM_FORTRAN_REAL_TYPE}.
+ *
+ */
+CFN_FUNCTION(${SYM_REAL_SHORT_TYPE}, ${SYM_PREFIX_UPPER}ABS1, 
+(
+	${SYM_COMPLEX_TYPE} Z
+))
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_RABS})  CFN_EOI
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_CREAL}) CFN_EOI
+	CFN_INTRINSIC_DCL(${SYM_INTRINSIC_CIMAG}) CFN_EOI
+
+	${SYM_REAL_TYPE} ${SYM_PREFIX_UPPER}ABS1 = ${SYM_CALL_ABS}(${SYM_CALL_CREAL}(Z)) + ${SYM_CALL_ABS}(${SYM_CALL_CIMAG}(Z)) CFN_EOI
+	
+	CFN_RETURN ${SYM_PREFIX_UPPER}ABS1 CFN_EOI
+	CFN_END
+
+/* EOF */
