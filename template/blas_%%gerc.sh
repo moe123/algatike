@@ -77,7 +77,7 @@ do_static_gerc ()
 
 	replace[0]='gerc_a'
 	replace[1]='GERC_A'
-	replace[2]='COMPLEX CFN_CD2_A(A, N)'
+	replace[2]='COMPLEX CFN_D2D_A(A, N)'
 
 	replace_all "${dest}" search[@] replace[@]
 }

@@ -158,7 +158,7 @@ CFN_BEGIN_DECLS
 
 #	define CFN_D1D(ID)      CFN_PTR_TO     (ID)
 #	define CFN_D2D(ID)      CFN_PTR_PTR_TO (ID)
-#	define CFN_CD2_A(ID, N) (*((ID)))[N]
+#	define CFN_D2D_A(ID, N) (*((ID)))[N]
 #	define CFN_ADDR(ID)     CFN_PTR_TO     (ID)
 #	define CFN_ADRF(ID)     CFN_PTR_DEREF((ID))
 
