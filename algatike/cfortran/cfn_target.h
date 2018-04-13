@@ -105,12 +105,12 @@ CFN_BEGIN_DECLS
 #	define CFN_PPCAT_NX_2(A, B) A ## B
 #	define CFN_PPCAT_NX_3(A, B, C) A ## B ## C
 #	define CFN_PPCAT_NX_7(A, B, C, D, E, F, G) \
-	A ## B ## C ## D ## E ## F ## G
+		A ## B ## C ## D ## E ## F ## G
 
 #	define CFN_PPCAT_2(A, B) CFN_PPCAT_NX_2(A, B)
 #	define CFN_PPCAT_3(A, B, C) CFN_PPCAT_NX_3(A, B, C)
 #	define CFN_PPCAT_7(A, B, C, D, E, F, G) \
-	CFN_PPCAT_NX_7(A, B, C, D, E, F, G)
+		CFN_PPCAT_NX_7(A, B, C, D, E, F, G)
 
 
 #	define CFN_PTR_TO(ID)     *  ID
@@ -122,39 +122,42 @@ CFN_BEGIN_DECLS
 #	define CFN_STOP      raise(SIGILL)
 
 #	define CFN_VECTOR_DECL(TYPE, NAME, N) \
-	(TYPE) NAME[N]
+		(TYPE) NAME[N]
 
 #	define CFN_CMATRIX_DECL(TYPE, NAME, M, N) \
-	(TYPE) NAME[M][N]
+		(TYPE) NAME[M][N]
 
 #	define CFN_VECTOR_NEW(TYPE, NAME, N) \
-	(TYPE) * NAME = ((TYPE) *)malloc(N * sizeof((TYPE)))
+		(TYPE) * NAME = ((TYPE) *)malloc(N * sizeof((TYPE)))
 
 #	define CFN_MATRIX_NEW(TYPE, NAME, N, M) \
-	(TYPE) ** NAME = ((TYPE) **)malloc(M * sizeof((TYPE) *)); \
-	do { \
-		for (size_t cfn_idx = 0; cfn_idx < N; cfn_idx++) { \
-			NAME[cfn_idx] = ((TYPE) *)malloc(N * sizeof((TYPE))); \
-		} \
-	} while (0)
+		(TYPE) ** NAME = ((TYPE) **)malloc(M * sizeof((TYPE) *)); \
+		do { \
+			for (size_t cfn_idx = 0; cfn_idx < N; cfn_idx++) { \
+				NAME[cfn_idx] = ((TYPE) *)malloc(N * sizeof((TYPE))); \
+			} \
+		} while (0)
 
 #	define CFN_SMATRIX_NEW(TYPE, NAME, N, M) \
-	(TYPE) * NAME = ((TYPE) *)malloc(N * M * sizeof((TYPE)))
+		(TYPE) * NAME = ((TYPE) *)malloc(N * M * sizeof((TYPE)))
 
 #	define CFN_VECTOR_DEL(ADDR) \
-	free(ADDR)
+		free(ADDR)
 
 #	define CFN_MATRIX_DEL(NAME, M) \
-	do { \
-		for(size_t cfn_idx = 0; cfn_idx < M; cfn_idx++) { \
-			free(NAME[cfn_idx]); \
-		} \
-		free(NAME); \
-		NAME = NULL; \
-	} while (0)
+		do { \
+			for(size_t cfn_idx = 0; cfn_idx < M; cfn_idx++) { \
+				free(NAME[cfn_idx]); \
+			} \
+			free(NAME); \
+			NAME = NULL; \
+		} while (0)
 
-#	define CFN_EXTERNAL  extern
-#	define CFN_VOID      void
+#	define CFN_SMATRIX_DEL(ADDR, M) \
+		(void)(M); free(ADDR)
+
+#	define CFN_EXTERNAL    extern
+#	define CFN_VOID        void
 
 #	define CFN_D1D(ID)      CFN_PTR_TO     (ID)
 #	define CFN_D2D(ID)      CFN_PTR_PTR_TO (ID)
