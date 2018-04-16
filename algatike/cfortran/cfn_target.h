@@ -63,6 +63,8 @@
 #	define CFN_STATIC_INLINE        CFN_STATIC CFN_INLINE
 #	define CFN_STATIC_ALWAYS_INLINE CFN_STATIC CFN_ALWAYS_INLINE
 
+#	define CFN_SIZEOF               sizeof
+
 CFN_BEGIN_DECLS
 
 #	include <stddef.h>
@@ -115,7 +117,7 @@ CFN_BEGIN_DECLS
 
 #	define CFN_PTR_TO(ID)     *  ID
 #	define CFN_PTR_PTR_TO(ID) ** ID
-#	define CFN_PTR_DEREF(PTR) *  PTR
+#	define CFN_PTR_DEREF(PTR) *PTR
 #	define CFN_CAST(TYPE, N) (TYPE)N
 
 #	define CFN_CERR(...) fprintf(stderr, __VA_ARGS__)
@@ -128,18 +130,18 @@ CFN_BEGIN_DECLS
 		(TYPE) NAME[M][N]
 
 #	define CFN_VECTOR_NEW(TYPE, NAME, N) \
-		(TYPE) * NAME = ((TYPE) *)malloc(N * sizeof((TYPE)))
+		(TYPE) * NAME = ((TYPE) *)malloc(N * CFN_SIZEOF ((TYPE)))
 
 #	define CFN_MATRIX_NEW(TYPE, NAME, N, M) \
-		(TYPE) ** NAME = ((TYPE) **)malloc(M * sizeof((TYPE) *)); \
+		(TYPE) ** NAME = ((TYPE) **)malloc(M * CFN_SIZEOF ((TYPE) *)); \
 		do { \
 			for (size_t cfn_idx = 0; cfn_idx < N; cfn_idx++) { \
-				NAME[cfn_idx] = ((TYPE) *)malloc(N * sizeof((TYPE))); \
+				NAME[cfn_idx] = ((TYPE) *)malloc(N * CFN_SIZEOF ((TYPE))); \
 			} \
 		} while (0)
 
 #	define CFN_SMATRIX_NEW(TYPE, NAME, N, M) \
-		(TYPE) * NAME = ((TYPE) *)malloc(N * M * sizeof((TYPE)))
+		(TYPE) * NAME = ((TYPE) *)malloc(N * M * CFN_SIZEOF ((TYPE)))
 
 #	define CFN_VECTOR_DEL(ADDR) \
 		free(ADDR)
@@ -156,8 +158,8 @@ CFN_BEGIN_DECLS
 #	define CFN_SMATRIX_DEL(ADDR, M) \
 		(void)(M); free(ADDR)
 
-#	define CFN_EXTERNAL    extern
-#	define CFN_VOID        void
+#	define CFN_EXTERNAL     extern
+#	define CFN_VOID         void
 
 #	define CFN_D1D(ID)      CFN_PTR_TO     (ID)
 #	define CFN_D2D(ID)      CFN_PTR_PTR_TO (ID)
