@@ -50,7 +50,7 @@ CFN_BEGIN_DECLS
 #	define CFN_LEN_TRIM strlen
 
 #	define CFN_D1D_AT(IDX) [((IDX) - 1)]
-#	define CFN_A2DT(COL, ROW) [(ROW - 1)][((COL) - 1)]
+#	define CFN_D2D_AT(COL, ROW) [(ROW - 1)][((COL) - 1)]
 #	define CFN_B2D_AT(NCOLS, COL, ROW) [((NCOLS) * ((ROW)  - 1)) + ((COL) - 1)]
 
 #	define CFN_GOTO(LABEL_IDN) \

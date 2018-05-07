@@ -96,7 +96,7 @@ do_gerc_b ()
 	search[0]='gerc'
 	search[1]='GERC'
 	search[2]='COMPLEX CFN_D2D(A)'
-	search[3]='A CFN_A2DT (II, J)'
+	search[3]='A CFN_D2D_AT (II, J)'
 
 	replace[0]='gerc_b'
 	replace[1]='GERC_B'
