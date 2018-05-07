@@ -60,7 +60,7 @@ TEMPLATE_SEARCH[15]='\${SYM_CALL_CEQ}'
 TEMPLATE_SEARCH[16]='\${SYM_CALL_CNE}'
 TEMPLATE_SEARCH[17]='\${SYM_CALL_IMAX}'
 
-do_static_gerc ()
+do_gerc_a ()
 {
 	local src="${1}"
 	local dest="${2}"
@@ -77,7 +77,31 @@ do_static_gerc ()
 
 	replace[0]='gerc_a'
 	replace[1]='GERC_A'
-	replace[2]='COMPLEX CFN_D2D_A(A, N)'
+	replace[2]='COMPLEX CFN_A2D(A, N)'
+
+	replace_all "${dest}" search[@] replace[@]
+}
+
+do_gerc_b ()
+{
+	local src="${1}"
+	local dest="${2}"
+
+	rm -f ${dest}
+	cp ${src} ${dest}
+	
+	declare -a search
+	declare -a replace
+
+	search[0]='gerc'
+	search[1]='GERC'
+	search[2]='COMPLEX CFN_D2D(A)'
+	search[3]='A CFN_A2DT (II, J)'
+
+	replace[0]='gerc_b'
+	replace[1]='GERC_B'
+	replace[2]='COMPLEX CFN_B2D(A)'
+	replace[3]='A CFN_B2D_AT (N, II, J)'
 
 	replace_all "${dest}" search[@] replace[@]
 }
@@ -112,12 +136,13 @@ do_blas_cgerc ()
 
 	replace_all "${dest}" TEMPLATE_SEARCH[@] replace[@]
 
-	do_static_gerc "${dest}" "${SOURCE_PATH}/blas_cgerc_a.c"
+	do_gerc_a "${dest}" "${SOURCE_PATH}/blas_cgerc_a.c"
+	do_gerc_b "${dest}" "${SOURCE_PATH}/blas_cgerc_b.c"
 }
 
-do_blas_scgerc ()
+do_blas_bcgerc ()
 {
-	local dest="${SOURCE_PATH}/blas_scgerc.c"
+	local dest="${SOURCE_PATH}/blas_bcgerc.c"
 	declare -r template="${TEMPLATE_PATH}/blas_%%gerc.ctpl"
 
 	declare -a replace
@@ -145,7 +170,8 @@ do_blas_scgerc ()
 
 	replace_all "${dest}" TEMPLATE_SEARCH[@] replace[@]
 
-	do_static_gerc "${dest}" "${SOURCE_PATH}/blas_scgerc_a.c"
+	do_gerc_a "${dest}" "${SOURCE_PATH}/blas_bcgerc_a.c"
+	do_gerc_b "${dest}" "${SOURCE_PATH}/blas_bcgerc_b.c"
 }
 
 do_blas_dcgerc ()
@@ -178,7 +204,8 @@ do_blas_dcgerc ()
 
 	replace_all "${dest}" TEMPLATE_SEARCH[@] replace[@]
 
-	do_static_gerc "${dest}" "${SOURCE_PATH}/blas_dcgerc_a.c"
+	do_gerc_a "${dest}" "${SOURCE_PATH}/blas_dcgerc_a.c"
+	do_gerc_b "${dest}" "${SOURCE_PATH}/blas_dcgerc_b.c"
 }
 
 do_blas_zcgerc ()
@@ -211,7 +238,8 @@ do_blas_zcgerc ()
 
 	replace_all "${dest}" TEMPLATE_SEARCH[@] replace[@]
 
-	do_static_gerc "${dest}" "${SOURCE_PATH}/blas_zcgerc_a.c"
+	do_gerc_a "${dest}" "${SOURCE_PATH}/blas_zcgerc_a.c"
+	do_gerc_b "${dest}" "${SOURCE_PATH}/blas_zcgerc_b.c"
 }
 
 do_blas_zgerc ()
@@ -244,16 +272,15 @@ do_blas_zgerc ()
 
 	replace_all "${dest}" TEMPLATE_SEARCH[@] replace[@]
 
-	do_static_gerc "${dest}" "${SOURCE_PATH}/blas_zgerc_a.c"
+	do_gerc_a "${dest}" "${SOURCE_PATH}/blas_zgerc_a.c"
+	do_gerc_b "${dest}" "${SOURCE_PATH}/blas_zgerc_b.c"
 }
 
 main ()
 {
 	do_blas_cgerc
 	do_blas_zgerc
-
-	# Fixing naming convention.
-	do_blas_scgerc
+	do_blas_bcgerc
 	do_blas_dcgerc
 	do_blas_zcgerc
 

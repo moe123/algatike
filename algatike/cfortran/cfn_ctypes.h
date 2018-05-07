@@ -51,10 +51,10 @@ CFN_BEGIN_DECLS
 #	define CFN_IBSET(A, POS)      (A) |= 1 << (POS)
 #	define CFN_IBCLR(A, POS)      (A) &= ~(1 << (POS));
 
-#	define CFN_IAND (A, B)        (A) & (B)
-#	define CFN_IOR  (A, B)        (A) | (B)
-#	define CFN_IEOR (A, B)        (A) ^ (B)
-#	define CFN_INOT (A)           ~(A)
+#	define CFN_IAND(A, B)         (A) & (B)
+#	define CFN_IOR(A, B)          (A) | (B)
+#	define CFN_IEOR(A, B)         (A) ^ (B)
+#	define CFN_INOT(A)            ~(A)
 
 #	define CFN_BIT_SIZE(I)        (CFN_SIZEOF((I)) * CHAR_BIT)
 

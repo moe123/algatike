@@ -50,8 +50,8 @@ CFN_BEGIN_DECLS
 #	define CFN_LEN_TRIM strlen
 
 #	define CFN_D1D_AT(IDX) [((IDX) - 1)]
-#	define CFN_D2D_AT(COL, ROW) [(ROW - 1)][((COL) - 1)]
-#	define CFN_D2D_S_AT(NCOLS, COL, ROW) [((NCOLS) * (ROW)) + (COL)]
+#	define CFN_A2DT(COL, ROW) [(ROW - 1)][((COL) - 1)]
+#	define CFN_B2D_AT(NCOLS, COL, ROW) [((NCOLS) * ((ROW)  - 1)) + ((COL) - 1)]
 
 #	define CFN_GOTO(LABEL_IDN) \
 	goto CFN_PPCAT_2(L, LABEL_IDN)
@@ -61,7 +61,7 @@ CFN_BEGIN_DECLS
 
 #	define CFN_DO_STEP(IDX, START, STOP, STEPS) \
 		for (size_t cfn_idx = 0, IDX = START \
-			; cfn_idx < CFN_MAX(0, CFN_CAST(size_t, ((STOP - START + STEPS) / STEPS)))\
+			; cfn_idx < CFN_MAX(0, CFN_CAST(size_t, ((STOP - START + STEPS) / STEPS))) \
 			; cfn_idx++, IDX += STEPS \
 		) {
 

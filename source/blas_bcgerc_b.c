@@ -1,13 +1,13 @@
 // # -*- coding: utf-8, tab-width: 3 -*-
 
 //
-// Assembled from blas_%%gerc_a.ctpl template, do not edit.
-// blas_dcgerc_a.c
+// Assembled from blas_%%gerc_b.ctpl template, do not edit.
+// blas_scgerc_b.c
 //
 // Copyright (C) 2018 Moe123. All rights reserved. 
 //
 
-// SUBROUTINE DCGERC_A(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)
+// SUBROUTINE SCGERC_B(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)
 // Online html documentation and credits available at:
 // http://www netlib org/lapack/explore-html/
 //
@@ -16,27 +16,27 @@
 #include <algatike/cfortran/cfn_math.h>
 #include <algatike/cfortran/cfn_complex.h>
 
-/*! SUBROUTINE DCGERC_A(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)(
+/*! SUBROUTINE SCGERC_B(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)(
  *   INTEGER M
  * , INTEGER N
- * , COMPLEX*16 ALPHA
- * , COMPLEX*16 X(*)
+ * , COMPLEX*8 ALPHA
+ * , COMPLEX*8 X(*)
  * , INTEGER INCX
- * , COMPLEX*16 Y(*)
+ * , COMPLEX*8 Y(*)
  * , INTEGER INCY
- * , COMPLEX*16 A(LDA, *)
+ * , COMPLEX*8 A(LDA, *)
  * , INTEGER LDA
  * )
  *
- * CFN_VOID CFN_DCGERC_A(
+ * CFN_VOID CFN_SCGERC_B(
  *   CFN_INTEGER M
  * , CFN_INTEGER N
- * , CFN_DCOMPLEX ALPHA
- * , CFN_DCOMPLEX CFN_D1D(X)
+ * , CFN_SCOMPLEX ALPHA
+ * , CFN_SCOMPLEX CFN_D1D(X)
  * , CFN_INTEGER INCX
- * , CFN_DCOMPLEX CFN_D1D(Y)
+ * , CFN_SCOMPLEX CFN_D1D(Y)
  * , CFN_INTEGER INCY
- * , CFN_DCOMPLEX CFN_A2D(A, N)
+ * , CFN_SCOMPLEX CFN_B2D(A)
  * , CFN_INTEGER LDA
  * ) CFN_EOI
  *
@@ -45,46 +45,46 @@
  *     Specifies the number of rows of the matrix A.
  * \param  INTEGER N
  *     Specifies the number of columns of the matrix A.
- * \param  COMPLEX*16 ALPHA
+ * \param  COMPLEX*8 ALPHA
  *     Specifies the scalar alpha.
- * \param  COMPLEX*16 X(*)
+ * \param  COMPLEX*8 X(*)
  *     Dimension at least (1 + (m - 1) * | INCX |).
  * \param  INTEGER INCX
  *     Specifies the increment for the elements of X.
- * \param  COMPLEX*16 Y(*)
+ * \param  COMPLEX*8 Y(*)
  *     Dimension at least (1 + (n - 1) * | INCY |).
  * \param  INTEGER INCY
  *     Specifies the increment for the elements of Y.
- * \param  COMPLEX*16 A(LDA, *)
+ * \param  COMPLEX*8 A(LDA, *)
  *     Dimension (LDA, N), must contain the matrix of coefficients.
  * \param  INTEGER LDA
  *     LDA specifies the first dimension of A. LDA must be at least MAX(1, M).
  * \result VOID
  *
  */
-CFN_SUBROUTINE(DCGERC_A,
+CFN_SUBROUTINE(SCGERC_B,
 (
 	  CFN_INTEGER M
 	, CFN_INTEGER N
-	, CFN_DCOMPLEX ALPHA
-	, CFN_DCOMPLEX CFN_INTENT CFN_D1D(X)
+	, CFN_SCOMPLEX ALPHA
+	, CFN_SCOMPLEX CFN_INTENT CFN_D1D(X)
 	, CFN_INTEGER INCX
-	, CFN_DCOMPLEX CFN_INTENT CFN_D1D(Y)
+	, CFN_SCOMPLEX CFN_INTENT CFN_D1D(Y)
 	, CFN_INTEGER INCY
-	, CFN_DCOMPLEX CFN_A2D(A, N)
+	, CFN_SCOMPLEX CFN_B2D(A)
 	, CFN_INTEGER LDA
 ))
-	CFN_INTRINSIC_DCL(DCONJG) CFN_EOI
-	CFN_INTRINSIC_DCL(DCMUL)  CFN_EOI
-	CFN_INTRINSIC_DCL(DCADD)  CFN_EOI
-	CFN_INTRINSIC_DCL(DCEQ)   CFN_EOI
-	CFN_INTRINSIC_DCL(DCNE)   CFN_EOI
+	CFN_INTRINSIC_DCL(SCONJG) CFN_EOI
+	CFN_INTRINSIC_DCL(SCMUL)  CFN_EOI
+	CFN_INTRINSIC_DCL(SCADD)  CFN_EOI
+	CFN_INTRINSIC_DCL(SCEQ)   CFN_EOI
+	CFN_INTRINSIC_DCL(SCNE)   CFN_EOI
 
 	CFN_INTRINSIC_DCL(IMAX) CFN_EOI
 
-	CFN_PARAMETER CFN_DCMPLX_DECL(ZERO, 0.0, 0.0) CFN_EOI
+	CFN_PARAMETER CFN_SCMPLX_DECL(ZERO, 0.0, 0.0) CFN_EOI
 
-	CFN_DCOMPLEX TEMP CFN_EOI
+	CFN_SCOMPLEX TEMP CFN_EOI
 	CFN_INTEGER II, INFO, IX, J, JY, KX CFN_EOI
 
 	CFN_EXTERNAL CFN_VOID CFN_XERBLA(CFN_INTENT CFN_CHARACTERS, CFN_INTEGER) CFN_EOI
@@ -102,10 +102,10 @@ CFN_SUBROUTINE(DCGERC_A,
 		INFO = 9 CFN_EOI
 	CFN_END_IF
 	CFN_IF (INFO CFN_NE 0) CFN_THEN
-		CFN_CALL CFN_XERBLA("DCGERC_A", INFO) CFN_EOI
+		CFN_CALL CFN_XERBLA("SCGERC_B", INFO) CFN_EOI
 		CFN_RETURN CFN_EOI
 	CFN_END_IF
-	CFN_IF ((M CFN_EQ 0) CFN_OR (N CFN_EQ 0) CFN_OR CFN_DCEQ(ALPHA, ZERO)) CFN_RETURN CFN_EOI
+	CFN_IF ((M CFN_EQ 0) CFN_OR (N CFN_EQ 0) CFN_OR CFN_SCEQ(ALPHA, ZERO)) CFN_RETURN CFN_EOI
 
 	CFN_IF (INCY CFN_GT 0) CFN_THEN
 		JY = 1 CFN_EOI
@@ -114,12 +114,12 @@ CFN_SUBROUTINE(DCGERC_A,
 	CFN_END_IF
 	CFN_IF (INCX CFN_EQ 1) CFN_THEN
 		CFN_DO_LABEL(20, J, 1, N)
-			CFN_IF (CFN_DCNE(Y CFN_D1D_AT (JY), ZERO)) CFN_THEN
-				TEMP = CFN_DCMUL(ALPHA, CFN_DCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
+			CFN_IF (CFN_SCNE(Y CFN_D1D_AT (JY), ZERO)) CFN_THEN
+				TEMP = CFN_SCMUL(ALPHA, CFN_SCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
 				CFN_DO_LABEL(10, II, 1, M)
-					A CFN_A2DT (II, J) = CFN_DCADD(
-						  A CFN_A2DT (II, J)
-						, CFN_DCMUL(X CFN_D1D_AT (II), TEMP)
+					A CFN_B2D_AT (N, II, J) = CFN_SCADD(
+						  A CFN_B2D_AT (N, II, J)
+						, CFN_SCMUL(X CFN_D1D_AT (II), TEMP)
 					) CFN_EOI
 				CFN_CONTINUE(10)
 			CFN_END_IF
@@ -132,13 +132,13 @@ CFN_SUBROUTINE(DCGERC_A,
 			KX = 1 - (M - 1) * INCX CFN_EOI
 		CFN_END_IF
 		CFN_DO_LABEL(40, J, 1, N)
-			CFN_IF (CFN_DCNE(Y CFN_D1D_AT (JY), ZERO)) CFN_THEN
-				TEMP = CFN_DCMUL(ALPHA, CFN_DCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
+			CFN_IF (CFN_SCNE(Y CFN_D1D_AT (JY), ZERO)) CFN_THEN
+				TEMP = CFN_SCMUL(ALPHA, CFN_SCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
 				IX = KX CFN_EOI
 				CFN_DO_LABEL(30, II, 1, M)
-					A CFN_A2DT (II, J) = CFN_DCADD(
-						  A CFN_A2DT (II, J)
-						, CFN_DCMUL(X CFN_D1D_AT (IX), TEMP)
+					A CFN_B2D_AT (N, II, J) = CFN_SCADD(
+						  A CFN_B2D_AT (N, II, J)
+						, CFN_SCMUL(X CFN_D1D_AT (IX), TEMP)
 					) CFN_EOI
 					IX = IX + INCX CFN_EOI
 				CFN_CONTINUE(30)

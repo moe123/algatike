@@ -15,7 +15,7 @@
 #		define CFN_TARGET_REAL_IS_FLOAT     1
 #	endif
 #	ifndef CFN_TARGET_INTERGER_IS_INT32
-#		define CFN_TARGET_INTERGER_IS_INT32     1
+#		define CFN_TARGET_INTERGER_IS_INT32 1
 #	endif
 
 #	ifdef __cplusplus
@@ -114,11 +114,10 @@ CFN_BEGIN_DECLS
 #	define CFN_PPCAT_7(A, B, C, D, E, F, G) \
 		CFN_PPCAT_NX_7(A, B, C, D, E, F, G)
 
-
 #	define CFN_PTR_TO(ID)     *  ID
 #	define CFN_PTR_PTR_TO(ID) ** ID
 #	define CFN_PTR_DEREF(PTR) *PTR
-#	define CFN_CAST(TYPE, N) (TYPE)N
+#	define CFN_CAST(TYPE, N)  (TYPE)N
 
 #	define CFN_CERR(...) fprintf(stderr, __VA_ARGS__)
 #	define CFN_STOP      raise(SIGILL)
@@ -146,13 +145,13 @@ CFN_BEGIN_DECLS
 #	define CFN_VECTOR_DEL(ADDR) \
 		free(ADDR)
 
-#	define CFN_MATRIX_DEL(NAME, M) \
+#	define CFN_MATRIX_DEL(ADDR, M) \
 		do { \
 			for(size_t cfn_idx = 0; cfn_idx < M; cfn_idx++) { \
-				free(NAME[cfn_idx]); \
+				free(ADDR[cfn_idx]); \
 			} \
-			free(NAME); \
-			NAME = NULL; \
+			free(ADDR); \
+			ADDR = NULL; \
 		} while (0)
 
 #	define CFN_SMATRIX_DEL(ADDR, M) \
@@ -163,7 +162,8 @@ CFN_BEGIN_DECLS
 
 #	define CFN_D1D(ID)      CFN_PTR_TO     (ID)
 #	define CFN_D2D(ID)      CFN_PTR_PTR_TO (ID)
-#	define CFN_D2D_A(ID, N) (*((ID)))[N]
+#	define CFN_A2D(ID, N)   (*((ID)))[N]
+#	define CFN_B2D(ID)      CFN_PTR_TO     (ID)
 #	define CFN_ADDR(ID)     CFN_PTR_TO     (ID)
 #	define CFN_ADRF(ID)     CFN_PTR_DEREF((ID))
 

@@ -1,13 +1,13 @@
 // # -*- coding: utf-8, tab-width: 3 -*-
 
 //
-// Assembled from blas_%%gerc_a.ctpl template, do not edit.
-// blas_dcgerc_a.c
+// Assembled from blas_%%gerc_b.ctpl template, do not edit.
+// blas_dcgerc_b.c
 //
 // Copyright (C) 2018 Moe123. All rights reserved. 
 //
 
-// SUBROUTINE DCGERC_A(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)
+// SUBROUTINE DCGERC_B(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)
 // Online html documentation and credits available at:
 // http://www netlib org/lapack/explore-html/
 //
@@ -16,7 +16,7 @@
 #include <algatike/cfortran/cfn_math.h>
 #include <algatike/cfortran/cfn_complex.h>
 
-/*! SUBROUTINE DCGERC_A(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)(
+/*! SUBROUTINE DCGERC_B(M,N,ALPHA,X,INCX,Y,INCY,A,LDA)(
  *   INTEGER M
  * , INTEGER N
  * , COMPLEX*16 ALPHA
@@ -28,7 +28,7 @@
  * , INTEGER LDA
  * )
  *
- * CFN_VOID CFN_DCGERC_A(
+ * CFN_VOID CFN_DCGERC_B(
  *   CFN_INTEGER M
  * , CFN_INTEGER N
  * , CFN_DCOMPLEX ALPHA
@@ -36,7 +36,7 @@
  * , CFN_INTEGER INCX
  * , CFN_DCOMPLEX CFN_D1D(Y)
  * , CFN_INTEGER INCY
- * , CFN_DCOMPLEX CFN_A2D(A, N)
+ * , CFN_DCOMPLEX CFN_B2D(A)
  * , CFN_INTEGER LDA
  * ) CFN_EOI
  *
@@ -62,7 +62,7 @@
  * \result VOID
  *
  */
-CFN_SUBROUTINE(DCGERC_A,
+CFN_SUBROUTINE(DCGERC_B,
 (
 	  CFN_INTEGER M
 	, CFN_INTEGER N
@@ -71,7 +71,7 @@ CFN_SUBROUTINE(DCGERC_A,
 	, CFN_INTEGER INCX
 	, CFN_DCOMPLEX CFN_INTENT CFN_D1D(Y)
 	, CFN_INTEGER INCY
-	, CFN_DCOMPLEX CFN_A2D(A, N)
+	, CFN_DCOMPLEX CFN_B2D(A)
 	, CFN_INTEGER LDA
 ))
 	CFN_INTRINSIC_DCL(DCONJG) CFN_EOI
@@ -102,7 +102,7 @@ CFN_SUBROUTINE(DCGERC_A,
 		INFO = 9 CFN_EOI
 	CFN_END_IF
 	CFN_IF (INFO CFN_NE 0) CFN_THEN
-		CFN_CALL CFN_XERBLA("DCGERC_A", INFO) CFN_EOI
+		CFN_CALL CFN_XERBLA("DCGERC_B", INFO) CFN_EOI
 		CFN_RETURN CFN_EOI
 	CFN_END_IF
 	CFN_IF ((M CFN_EQ 0) CFN_OR (N CFN_EQ 0) CFN_OR CFN_DCEQ(ALPHA, ZERO)) CFN_RETURN CFN_EOI
@@ -117,8 +117,8 @@ CFN_SUBROUTINE(DCGERC_A,
 			CFN_IF (CFN_DCNE(Y CFN_D1D_AT (JY), ZERO)) CFN_THEN
 				TEMP = CFN_DCMUL(ALPHA, CFN_DCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
 				CFN_DO_LABEL(10, II, 1, M)
-					A CFN_A2DT (II, J) = CFN_DCADD(
-						  A CFN_A2DT (II, J)
+					A CFN_B2D_AT (N, II, J) = CFN_DCADD(
+						  A CFN_B2D_AT (N, II, J)
 						, CFN_DCMUL(X CFN_D1D_AT (II), TEMP)
 					) CFN_EOI
 				CFN_CONTINUE(10)
@@ -136,8 +136,8 @@ CFN_SUBROUTINE(DCGERC_A,
 				TEMP = CFN_DCMUL(ALPHA, CFN_DCONJG(Y CFN_D1D_AT (JY))) CFN_EOI
 				IX = KX CFN_EOI
 				CFN_DO_LABEL(30, II, 1, M)
-					A CFN_A2DT (II, J) = CFN_DCADD(
-						  A CFN_A2DT (II, J)
+					A CFN_B2D_AT (N, II, J) = CFN_DCADD(
+						  A CFN_B2D_AT (N, II, J)
 						, CFN_DCMUL(X CFN_D1D_AT (IX), TEMP)
 					) CFN_EOI
 					IX = IX + INCX CFN_EOI
